@@ -20,7 +20,11 @@ public class Main {
         while (isNotExitKey(operation)){
             operation = readOperation();
             if(isNotExitKey(operation)) {
-                processOperation(operation);
+                try {
+                    processOperation(operation);
+                }catch (Exception ex){
+                    System.out.println(ex.getMessage());
+                }
             }
         }
     }
@@ -38,24 +42,24 @@ public class Main {
     }
 
     private static void sellProduct() {
-        System.out.println("Add meg a vásárolni kívánt termék nevét:");
+        System.out.print("Add meg a vásárolni kívánt termék nevét: ");
         String productName = sc.next();
-        System.out.printf("Add meg a darabszámot: ");
+        System.out.print("Add meg a darabszámot: ");
         int amount = sc.nextInt();
         int soldAmount = storeRegister.sellProductItem(productName, amount);
         System.out.println(MessageFormat.format("Sikeresen megvásároltál {0} db terméket!", soldAmount));
     }
 
     private static void buyProduct() {
-        System.out.println("Add meg a termék nevét: ");
+        System.out.print("Add meg a termék nevét: ");
         String productName = sc.next();
-        System.out.println("Add meg a darabszámot: ");
+        System.out.print("Add meg a darabszámot: ");
         int amount = sc.nextInt();
         storeRegister.buyProductItem(productName, amount);
     }
 
     private static void createProduct() {
-        System.out.println("Add meg a termék nevét:");
+        System.out.print("Add meg a termék nevét: ");
         String productName = sc.next();
         storeRegister.createProduct(productName);
         System.out.println("Termék sikeresen hozzáadva!");
@@ -64,26 +68,26 @@ public class Main {
     private static String readOperation() {
         System.out.println("Válassz tevékenységet!");
         String operationKey = null;
-        while(!isOperationKey(operationKey)) {
-            System.out.println("Létrehozás (l), árufeltöltés (f), vásárlás (v):");
+        while(isNotOperationKey(operationKey)) {
+            System.out.print("Létrehozás (l), árufeltöltés (f), vásárlás (v): ");
             operationKey = sc.next();
-            if(!isOperationKey(operationKey))
+            if(isNotOperationKey(operationKey))
                 System.out.println("Érvénytelen tevékenység!");
         }
         return operationKey;
     }
 
-    private static boolean isOperationKey(String operation) {
-        return "l".equals(operation) || "f".equals(operation) || "v".equals(operation);
+    private static boolean isNotOperationKey(String operation) {
+        return !("l".equals(operation) || "f".equals(operation) || "v".equals(operation));
     }
 
     private static StorePersistenceType readPersistenceType() {
         String storeType = null;
-        while(!isStorageTypeKey(storeType)) {
+        while(isNotStorageTypeKey(storeType)) {
             System.out.println("Add meg az adattárolási módot!");
-            System.out.println("Fájl alapú(f) vagy memória alapú (m):");
+            System.out.print("Fájl alapú(f) vagy memória alapú (m): ");
             storeType = sc.next();
-            if(!isStorageTypeKey(storeType))
+            if(isNotStorageTypeKey(storeType))
                 System.out.println("Érvénytelen adattárolási mód!");
         }
         assert storeType != null;
@@ -94,7 +98,7 @@ public class Main {
         };
     }
 
-    private static boolean isStorageTypeKey(String storageType) {
-        return "f".equals(storageType) || "m".equals(storageType);
+    private static boolean isNotStorageTypeKey(String storageType) {
+        return !("f".equals(storageType) || "m".equals(storageType));
     }
 }
