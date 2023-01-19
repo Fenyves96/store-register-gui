@@ -1,4 +1,4 @@
-package org.example;
+package hu.fenyvesvolgyimate.storeregister.gui;
 
 import hu.fenyvesvolgyimate.storeregister.SlimStoreRegister;
 import hu.fenyvesvolgyimate.storeregister.StorePersistenceType;
